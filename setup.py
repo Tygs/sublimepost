@@ -7,7 +7,8 @@ setuptools.setup(name='sublimepost',
                  author='Sam, Max & friends',
                  author_email='lesametlemax@gmail.com',
                  url='https://github.com/sametmax/sublimepost/',
-                 py_modules=['sublimepost'],
+                 packages=['sublimepost'],
+                 package_dir={'': 'src'},
                  install_requires=['aiohttp', ],
                  extras_require={
                      'dev': ['sphinx', 'tox', 'pytest']
