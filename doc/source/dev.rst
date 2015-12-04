@@ -30,3 +30,13 @@ Build documentation
     pip install sphinx
     cd sublimepost/doc
     sphinx-build -b html source build
+
+Run tests
+=========
+
+::
+    git clone git://github.com/sametmax/sublimepost.git
+    python3.5 -m venv sublimepost-doc-venv
+    source sublimepost-doc-venv/bin/activate
+    pip install .[dev]
+    tox
