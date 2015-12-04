@@ -9,10 +9,12 @@ setuptools.setup(name='sublimepost',
                  url='https://github.com/sametmax/sublimepost/',
                  packages=['sublimepost'],
                  package_dir={'': 'src'},
-                 install_requires=['aiohttp', ],
+                 install_requires=['aiohttp', 'jinja2', 'aiohttp-jinja2',
+                                   'path.py'],
                  extras_require={
-                     'dev': ['sphinx', 'tox', 'pytest']
+                     'dev': ['sphinx', 'tox', 'pytest', 'requests']
                  },
+                 include_package_data=True,
                  license='WTFPL',
                  zip_safe=False,
                  keywords='sublimepost blogging microblogging async',
