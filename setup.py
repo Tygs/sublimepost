@@ -1,3 +1,4 @@
+
 import setuptools
 
 setuptools.setup(name='sublimepost',
@@ -7,7 +8,7 @@ setuptools.setup(name='sublimepost',
                  author='Sam, Max & friends',
                  author_email='lesametlemax@gmail.com',
                  url='https://github.com/sametmax/sublimepost/',
-                 packages=['sublimepost'],
+                 packages=setuptools.find_packages('src'),
                  package_dir={'': 'src'},
                  install_requires=['aiohttp', 'jinja2', 'aiohttp-jinja2',
                                    'path.py'],
