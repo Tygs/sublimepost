@@ -11,9 +11,10 @@ class Server:
                                                        8080)
         self.server = None
 
-    def run(self):
-        self.server = self.loop.run_until_complete(self._server_factory)
-        print('Serving on', self.server.sockets[0].getsockname())
+    def get_server(self):
+        return self.loop.run_until_complete(self._server_factory)
+
+    def _run_server(self):
         try:
             self.loop.run_forever()
         except KeyboardInterrupt:
@@ -21,9 +22,14 @@ class Server:
         finally:
             self.stop()
 
+    def run(self):
+        self.server = self.get_server()
+        # print('Serving on', self.server.sockets[0].getsockname())
+        self._run_server()
+
     def stop(self):
         self.loop.run_until_complete(self.handler.finish_connections(1.0))
-        self.srv.close()
-        self.loop.run_until_complete(self.srv.wait_closed())
+        self.server.close()
+        self.loop.run_until_complete(self.server.wait_closed())
         self.loop.run_until_complete(self.app.finish())
         self.loop.close()
