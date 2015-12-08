@@ -63,5 +63,6 @@ target/
 *.zip
 
 # unit tests
+twistd.hostname
 runtests
 htmlcov
