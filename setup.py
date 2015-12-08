@@ -13,7 +13,7 @@ setuptools.setup(name='sublimepost',
                  install_requires=['aiohttp', 'jinja2', 'aiohttp-jinja2',
                                    'path.py'],
                  extras_require={
-                     'dev': ['sphinx', 'tox', 'pytest', 'requests']
+                     'dev': ['sphinx', 'tox', 'pytest', 'requests', 'pytest-cov']
                  },
                  include_package_data=True,
                  license='WTFPL',

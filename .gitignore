@@ -62,4 +62,6 @@ target/
 *.bz2
 *.zip
 
+# unit tests
 runtests
+htmlcov
