@@ -10,8 +10,7 @@ setuptools.setup(name='sublimepost',
                  url='https://github.com/sametmax/sublimepost/',
                  packages=setuptools.find_packages('src'),
                  package_dir={'': 'src'},
-                 install_requires=['aiohttp', 'jinja2', 'aiohttp-jinja2',
-                                   'path.py'],
+                 install_requires=['tygs', 'path.py'],
                  extras_require={
                      'dev': ['sphinx', 'tox', 'pytest', 'requests', 'pytest-cov']
                  },
