@@ -11,8 +11,12 @@ setuptools.setup(name='sublimepost',
                  packages=setuptools.find_packages('src'),
                  package_dir={'': 'src'},
                  install_requires=['tygs', 'path.py'],
+                 dependency_links=[
+                     'https://github.com/sametmax/tygs/tarball/master#egg=tygs',
+                 ],
                  extras_require={
-                     'dev': ['sphinx', 'tox', 'pytest', 'requests', 'pytest-cov']
+                     'dev': ['sphinx', 'tox', 'pytest', 'requests',
+                     'pytest-cov']
                  },
                  include_package_data=True,
                  license='WTFPL',
