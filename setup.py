@@ -1,5 +1,31 @@
 
 import setuptools
+import re
+
+
+def get_requirements():
+
+    setuppy_pattern = \
+        'https://github.com/{user}/{repo}/tarball/master#egg={egg}'
+
+    dependency_links = []
+    install_requires = []
+    with open('requirements.txt') as f:
+        for line in f:
+
+            if line.startswith('-e'):
+                url_infos = re.search(
+                    r'github.com/(?P<user>[^/.]+)/(?P<repo>[^.]+).git#egg=(?P<egg>.+)',
+                    line).groupdict()
+                dependency_links.append(setuppy_pattern.format(**url_infos))
+                install_requires.append(url_infos['egg'])
+            else:
+                install_requires.append(line.strip())
+
+    print(install_requires, dependency_links)
+    return install_requires, dependency_links
+
+install_requires, dependency_links = get_requirements()
 
 setuptools.setup(name='sublimepost',
                  version='0.1.0',
@@ -10,13 +36,11 @@ setuptools.setup(name='sublimepost',
                  url='https://github.com/sametmax/sublimepost/',
                  packages=setuptools.find_packages('src'),
                  package_dir={'': 'src'},
-                 install_requires=['tygs', 'path.py'],
-                 dependency_links=[
-                     'https://github.com/sametmax/tygs/tarball/master#egg=tygs',
-                 ],
+                 install_requires=install_requires,
+                 dependency_links=dependency_links,
                  extras_require={
                      'dev': ['sphinx', 'tox', 'pytest', 'requests',
-                     'pytest-cov']
+                             'pytest-cov']
                  },
                  include_package_data=True,
                  license='WTFPL',

@@ -1,1 +1,2 @@
 recursive-include src *.jinja2
+include requirements.txt
