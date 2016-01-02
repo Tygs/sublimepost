@@ -18,7 +18,8 @@ def get_requirements():
                     r'github.com/(?P<user>[^/.]+)/(?P<repo>[^.]+).git#egg=(?P<egg>.+)',
                     line).groupdict()
                 dependency_links.append(setuppy_pattern.format(**url_infos))
-                install_requires.append(url_infos['egg'])
+                egg_name = '=='.join(url_infos['egg'].rsplit('-', 1))
+                install_requires.append(egg_name)
             else:
                 install_requires.append(line.strip())
 
