@@ -5,17 +5,19 @@ from unittest.mock import MagicMock
 
 import pytest
 import requests
+from path import Path
 
+import sublimepost
 from sublimepost.__main__ import app
-from sublimepost.server import Server
 
 
 @pytest.yield_fixture(scope='module', autouse=True)
 def start_server():
-    srv = Server(app)
-    t = Process(target=srv.run)
+    path = Path(sublimepost.__file__).parent
+
+    t = Process(target=app.ready, kwargs={'cwd': path})
     t.start()
-    sleep(1)
+    sleep(3)
     yield
     # srv.stop()
     t.terminate()
@@ -26,20 +28,10 @@ def test_run():
     req = requests.get('http://localhost:8080')
     assert b'Hello world' in req.content
 
-def test_server():
-    srv = Server(app)
-    srv.loop = MagicMock()
-    srv.server = MagicMock()
-    srv.app = MagicMock()
-    srv.handler = MagicMock()
-    c = srv.loop.run_until_complete.call_count
-    srv.get_server()
-    assert srv.loop.run_until_complete.call_count == c + 1, 'run_until_complete has not been called since server fetch'
-    c2 = srv.loop.run_forever.call_count
+    req = requests.get('http://localhost:8080/test')
+    assert b'Hello test' in req.content
 
-    srv._run_server()
-    assert srv.loop.run_forever.call_count == c2 + 1, 'run_forever has not been called since run call'
-    assert srv.loop.close.call_count == 1
-    assert srv.server.close.call_count == 1
-    assert srv.handler.finish_connections.call_count == 1
-    assert srv.app.finish.call_count == 1
+def test_basic_xss():
+    req = requests.get('http://localhost:8080/<h1>test')
+    assert b'Hello &lt;h1&gt;test' in req.content
+
