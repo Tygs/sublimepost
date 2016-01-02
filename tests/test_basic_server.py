@@ -5,29 +5,33 @@ from unittest.mock import MagicMock
 
 import pytest
 import requests
+from path import Path
 
+import sublimepost
 from sublimepost.__main__ import app
-from sublimepost.server import Server
 
 
 @pytest.yield_fixture(scope='module', autouse=True)
 def start_server():
-    print('Before process')
-    t = Process(target=app.ready)
-    print('After process creation')
+    path = Path(sublimepost.__file__).parent
+
+    t = Process(target=app.ready, kwargs={'cwd': path})
     t.start()
-    print('After process start')
     sleep(3)
-    print('After slip')
     yield
-    print('After yield')
     # srv.stop()
     t.terminate()
-    print('After terminate')
-    t.join()
-    print('After join')
+    # t.join()
 
 
 def test_run():
     req = requests.get('http://localhost:8080')
     assert b'Hello world' in req.content
+
+    req = requests.get('http://localhost:8080/test')
+    assert b'Hello test' in req.content
+
+def test_basic_xss():
+    req = requests.get('http://localhost:8080/<h1>test')
+    assert b'Hello &lt;h1&gt;test' in req.content
+

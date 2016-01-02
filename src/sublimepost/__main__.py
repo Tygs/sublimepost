@@ -13,4 +13,5 @@ async def hello(req, res):
 async def toto(req, res):
     res.render('hello.html', req.url_params)
 
-app.ready()
+if __name__ == '__main__':
+    app.ready()
