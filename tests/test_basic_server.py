@@ -17,7 +17,7 @@ def start_server():
 
     t = Process(target=app.ready, kwargs={'cwd': path})
     t.start()
-    sleep(3)
+    sleep(300)
     yield
     # srv.stop()
     t.terminate()

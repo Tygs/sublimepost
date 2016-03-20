@@ -6,12 +6,12 @@ app, http = WebApp.quickstart('sublimepost')
 
 @http.get('/')
 async def hello(req, res):
-    res.render('hello.html', {'name': 'world'})
+    return res.template('hello.html', {'name': 'world'})
 
 
 @http.get('/<name>')
 async def toto(req, res):
-    res.render('hello.html', req.url_params)
+    return res.template('hello.html', req.url_params)
 
 if __name__ == '__main__':
     app.ready()
