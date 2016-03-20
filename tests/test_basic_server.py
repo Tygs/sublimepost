@@ -1,7 +1,5 @@
-# from threading import Thread
 from multiprocessing import Process
 from time import sleep
-from unittest.mock import MagicMock
 
 import pytest
 import requests
@@ -30,6 +28,7 @@ def test_run():
 
     req = requests.get('http://localhost:8080/test')
     assert b'Hello test' in req.content
+
 
 def test_basic_xss():
     req = requests.get('http://localhost:8080/<h1>test')
