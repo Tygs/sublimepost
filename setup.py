@@ -3,36 +3,44 @@ import setuptools
 import re
 
 
-def get_requirements():
+def get_version(path="src/sublimepost/__init__.py"):
+    """ Return the version of by with regex intead of importing it"""
+    init_content = open(path, "rt").read()
+    pattern = r"^__version__ = ['\"]([^'\"]*)['\"]"
+    return re.search(pattern, init_content, re.M).group(1)
 
-    setuppy_pattern = \
+
+def get_requirements(path):
+
+    setuppy_format = \
         'https://github.com/{user}/{repo}/tarball/master#egg={egg}'
 
-    dependency_links = []
+    setuppy_pattern = \
+        r'github.com/(?P<user>[^/.]+)/(?P<repo>[^.]+).git#egg=(?P<egg>.+)'
+
+    dep_links = []
     install_requires = []
-    with open('requirements.txt') as f:
+    with open(path) as f:
         for line in f:
 
             if line.startswith('-e'):
-                url_infos = re.search(
-                    r'github.com/(?P<user>[^/.]+)/(?P<repo>[^.]+).git#egg=(?P<egg>.+)',
-                    line).groupdict()
-                dependency_links.append(setuppy_pattern.format(**url_infos))
+                url_infos = re.search(setuppy_pattern, line).groupdict()
+                dep_links.append(setuppy_format.format(**url_infos))
                 egg_name = '=='.join(url_infos['egg'].rsplit('-', 1))
                 install_requires.append(egg_name)
             else:
                 install_requires.append(line.strip())
 
-    print(install_requires, dependency_links)
-    return install_requires, dependency_links
+    return install_requires, dep_links
 
-install_requires, dependency_links = get_requirements()
+install_requires, dependency_links = get_requirements('requirements.txt')
+dev_requirements, _ = get_requirements('dev-requirements.txt')
 
 setuptools.setup(name='sublimepost',
                  version='0.1.0',
                  description='New generation content management system',
                  long_description=open('README.rst').read().strip(),
-                 author='Sam, Max & friends',
+                 author='Sam & Gordon',
                  author_email='lesametlemax@gmail.com',
                  url='https://github.com/sametmax/sublimepost/',
                  packages=setuptools.find_packages('src'),
@@ -40,9 +48,9 @@ setuptools.setup(name='sublimepost',
                  install_requires=install_requires,
                  dependency_links=dependency_links,
                  extras_require={
-                     'dev': ['sphinx', 'tox', 'pytest', 'requests',
-                             'pytest-cov']
+                     'dev': dev_requirements
                  },
+                 setup_requires=['pytest-runner'],
                  include_package_data=True,
                  license='WTFPL',
                  zip_safe=False,
