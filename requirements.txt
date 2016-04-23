@@ -1,2 +1,2 @@
--e git+ssh://git@github.com/sametmax/tygs.git#egg=tygs
+-e git+ssh://git@github.com/Tygs/tygs.git#egg=tygs
 path.py==8.1.2
