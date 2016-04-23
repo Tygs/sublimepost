@@ -31,4 +31,3 @@ def test_run(start_server):
 def test_basic_xss(start_server):
     req = requests.get('http://localhost:8080/<h1>test')
     assert b'Hello &lt;h1&gt;test' in req.content
-

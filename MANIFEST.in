@@ -1,2 +1,3 @@
-recursive-include src *.html
-include requirements.txt
+recursive-include src *.html *.css *.js
+include *requirements.txt
+

@@ -43,7 +43,7 @@ htmlcov/
 nosetests.xml
 coverage.xml
 *.sqlite
-
+public_html/
 # Translations
 *.mo
 *.pot
@@ -68,6 +68,7 @@ htmlcov
 
 # Editors
 *.sublime-*
+.vscode
 
 # tempfile
 *.tmp
