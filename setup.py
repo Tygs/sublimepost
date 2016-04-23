@@ -50,6 +50,7 @@ setuptools.setup(name='sublimepost',
                  extras_require={
                      'dev': dev_requirements
                  },
+                 setup_requires=['pytest-runner'],
                  include_package_data=True,
                  license='WTFPL',
                  zip_safe=False,
