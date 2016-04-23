@@ -13,7 +13,7 @@ def get_version(path="src/sublimepost/__init__.py"):
 def get_requirements(path):
 
     setuppy_format = \
-        'https://github.com/{user}/{repo}/tarball/master#egg={egg}'
+        'https://codeload.github.com/{user}/{repo}/zip/master#egg=tygs'
 
     setuppy_pattern = \
         r'github.com/(?P<user>[^/.]+)/(?P<repo>[^.]+).git#egg=(?P<egg>.+)'
