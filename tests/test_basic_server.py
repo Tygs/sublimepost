@@ -12,17 +12,15 @@ from sublimepost.__main__ import app
 @pytest.yield_fixture(scope='module', autouse=True)
 def start_server():
     path = Path(sublimepost.__file__).parent
-
     t = Process(target=app.ready, kwargs={'cwd': path})
     t.start()
-    sleep(300)
+    sleep(1)
     yield
-    # srv.stop()
     t.terminate()
-    # t.join()
+    t.join()
 
 
-def test_run():
+def test_run(start_server):
     req = requests.get('http://localhost:8080')
     assert b'Hello world' in req.content
 
@@ -30,7 +28,7 @@ def test_run():
     assert b'Hello test' in req.content
 
 
-def test_basic_xss():
+def test_basic_xss(start_server):
     req = requests.get('http://localhost:8080/<h1>test')
     assert b'Hello &lt;h1&gt;test' in req.content
 
