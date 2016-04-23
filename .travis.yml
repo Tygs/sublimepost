@@ -6,6 +6,7 @@ branches:
 
 # Python versions for matrix
 language: python
+# cache: pip
 python:
   - "3.5-dev"
 
@@ -20,3 +21,4 @@ script:
 
 after_success:
  - coveralls
+

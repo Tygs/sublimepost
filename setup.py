@@ -37,7 +37,7 @@ install_requires, dependency_links = get_requirements('requirements.txt')
 dev_requirements, _ = get_requirements('dev-requirements.txt')
 
 setuptools.setup(name='sublimepost',
-                 version='0.1.0',
+                 version=get_version(),
                  description='New generation content management system',
                  long_description=open('README.rst').read().strip(),
                  author='Sam & Gordon',
